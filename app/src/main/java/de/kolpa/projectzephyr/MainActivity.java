@@ -1,5 +1,6 @@
 package de.kolpa.projectzephyr;
 
+import android.graphics.Color;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private int _count = 0;
-    private int _max = 10;
+    private int runden = 11;
+    private int _max = runden + 1;
     private GedichtListAdapter listAdapter;
     private Button enterButton;
 
@@ -34,16 +36,47 @@ public class MainActivity extends AppCompatActivity {
 
                 countUp();
                 listAdapter.addZeile(text.getText().toString());
+                text.setText("");
 
-                if (_count == 10) {
+                int flag = 0;
+
+                if (text.getHint().toString().equals("Titel")) {
+                    text.setHint("Neuer Satz");
+
+                    flag++;
+
+                }
+                if (text.getHint().toString().equals("A") && (flag == 0)) {
+                    text.setHint("Ein Reim");
+                    flag++;
+                }
+                if (text.getHint().toString().equals("Neuer Satz") && (flag == 0)) {
+                    text.setHint("Ein Reim");
+                    flag++;
+                }
+                if(text.getHint().toString().equals("Ein Reim") && (flag == 0)) {
+                        text.setHint("Neuer Satz");
+                    flag++;
+                }
+                int farbe = enterButton.getDrawingCacheBackgroundColor();
+                if (_count == runden) {
                     listAdapter.revealText();
-                    enterButton.setText("Reset");
+                    enterButton.setRotation(270f);
+                    enterButton.setText("Neu");
+                    text.setHint("Neues Spiel starten ->");
                 }
 
-                if (_count == 11) {
-                    _count = 0;
-                    enterButton.setText("Enter");
+                if (_count == (_max)) {
+
+                    enterButton.setText("");
+
                     listAdapter.reset();
+                    text.setHint("Titel");
+                    enterButton.setRotation(0f);
+
+                    flag = 0;
+                    _count = -1;
+
                 }
             }
         });

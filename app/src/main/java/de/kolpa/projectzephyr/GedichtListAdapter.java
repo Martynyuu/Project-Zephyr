@@ -20,6 +20,7 @@ class GedichtListAdapter extends BaseAdapter {
 
     private static class GedichtViewHolder {
         TextView textView;
+
     }
 
     GedichtListAdapter(Context context) {
@@ -59,6 +60,11 @@ class GedichtListAdapter extends BaseAdapter {
         }
 
         GedichtViewHolder holder = (GedichtViewHolder) mainView.getTag();
+
+        if (position == 0) {
+            holder.textView.setTextSize(42);
+        }
+
         holder.textView.setText(_displayZeilen.get(position));
 
         return mainView;
@@ -72,7 +78,7 @@ class GedichtListAdapter extends BaseAdapter {
             String hidden = "";
 
             for (char ch : _displayZeilen.get(i).toCharArray()) {
-                hidden += "*";
+                hidden += " ";
             }
 
             _displayZeilen.set(i, hidden);
