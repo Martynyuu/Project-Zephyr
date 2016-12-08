@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private int _count = 0;
-    private int runden = 11;
+    private int runden = 10;
     private int _max = runden + 1;
     private GedichtListAdapter listAdapter;
     private Button enterButton;
@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                countUp();
+
                 listAdapter.addZeile(text.getText().toString());
                 text.setText("");
-
+                countUp();
                 int flag = 0;
 
                 if (text.getHint().toString().equals("Titel")) {
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     enterButton.setRotation(0f);
 
                     flag = 0;
-                    _count = -1;
+                    _count = 0;
 
                 }
             }
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void countUp() {
         _count += 1;
-        if (_count == _max) {
+        if (_count == runden) {
             listAdapter.revealText();
         }
     }
